@@ -12,11 +12,11 @@ class interfaceGraphPhrases:
         self.createWindowMain()
 
     def createWindowMain(self):
+        #print(self.P.street)
+
         #window to menu
         self.window = Tk()
         
-        #'200x200+500+50'
-        #self.window.geometry('300x200+500+50')
         self.window.resizable(False, False)
         self.window.geometry("{0}x{1}+0+0".format(self.window.winfo_screenwidth(), self.window.winfo_screenheight()))
         self.window.title('Game to Learn English')
@@ -26,7 +26,7 @@ class interfaceGraphPhrases:
         btStart.pack(padx= "10", pady="10")
 
         #button for choose lange
-        btLanguage = Button(text='Choose Language', width=25, height=4, font='Arial 15 bold', bg='black', fg='white')
+        btLanguage = Button(text='Choose Language', width=25, height=4, font='Arial 15 bold', bg='black', fg='white', command=self.chooseLanguage)
         btLanguage.pack(padx= "10", pady="10")
 
         #button exit
@@ -44,6 +44,43 @@ class interfaceGraphPhrases:
     def getPhrasesO(self):
         return self.listPhrasesO
 
+    def chooseLanguage(self):
+        #destroy window
+        self.getWindow().destroy()
+        
+        #functions
+        def chLanguage(codLanguage):
+            ArqLanguage = open('{}/Language.txt'.format(self.P.currentRoad), 'w')
+            ArqLanguage.write(str(codLanguage))
+            
+            ArqLanguage.close()
+
+        windowLanguage = Tk()
+        windowLanguage.title('CHOOSE LANGUAGE')
+
+        #size of Buttons
+        sizeWidth = 15
+        sizeHeight = 2
+
+        #buttons to choose language
+        btEnglish = Button(text='ENGLISH', width=sizeWidth, height=sizeHeight, font='Arial 15 bold', bg='black', fg='white', command=lambda : chLanguage(1))
+        btEnglish.pack(padx= "10", pady="5")
+
+        btItalian = Button(text='ITALIAN', width=sizeWidth, height=sizeHeight, font='Arial 15 bold', bg='black', fg='white', command=lambda : chLanguage(2))
+        btItalian.pack(padx= "10", pady="5")
+
+        btSpanish = Button(text='SPANISH', width=sizeWidth, height=sizeHeight, font='Arial 15 bold', bg='black', fg='white', command=lambda : chLanguage(3))
+        btSpanish.pack(padx= "10", pady="5")
+
+        btFranch = Button(text='FRANCH', width=sizeWidth, height=sizeHeight, font='Arial 15 bold', bg='black', fg='white', command=lambda : chLanguage(4))
+        btFranch.pack(padx= "10", pady="5")
+
+        windowLanguage.mainloop()
+
+        #create menu again
+        self.createWindowMain()
+
+    #principal window of game
     def startGame(self):
         
         global cont
@@ -54,9 +91,6 @@ class interfaceGraphPhrases:
 
         #lista ordenada
         listOrder = self.getPhrasesO()
-
-        print(currentList)
-        print(listOrder)
 
         #destroy window
         self.getWindow().destroy()

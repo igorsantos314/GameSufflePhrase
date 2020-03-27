@@ -2,11 +2,10 @@ from random import sample
 import os
 
 class phrase:
+
     def __init__(self):
-        #diretorio da imagem
-        self.street = ''
-        self.changeStreet(1)
-        
+        self.currentRoad = '/home/igor/Área de trabalho/GameEnglish'
+
         #lista de frases Ordenadas e Deseordenadas
         self.listPhrasesD = []
         self.listPhrasesO = []
@@ -22,24 +21,6 @@ class phrase:
 
         #modifcar as palavras da listaOrdenada
         self.modifyWords()
-
-    def getStreet(self):
-        #retorna o caminho
-        return self.street
-
-    def setStreet(self, newRoad):
-        self.street = newRoad
-
-    def changeStreet(self, codLanguage):
-        #dicionario de idiomas
-        dictLanguage = {1:'English', 2:'Italian'}
-
-        #modificar o caminho de acordo com a imagem
-        #currentRoad = os.getcwd()
-        currentRoad = '/home/igor/Área de trabalho/GameEnglish'
-        road = '{}/{}/'.format(currentRoad, dictLanguage[codLanguage])
-
-        self.setStreet(road)
 
     def setlistPhrasesD(self, newPhrase):
         #adiciona uma nova frase a ListaD
@@ -96,17 +77,36 @@ class phrase:
             return self.orderWords(listWords)
         
         return listWords
-        
+    
+    def getLanguageArq(self):
+        dictLanguage = {1:'English', 2:'Italian', 3:'Spanish', 4:'Franch'}
+
+        ArqLanguage = open('{}/Language.txt'.format(self.currentRoad))
+
+        pos = 0
+
+        #get id language
+        for i in ArqLanguage:
+            pos = int(i)
+
+        ArqLanguage.close()
+
+        #return dir of Language
+        currentRoad = '/home/igor/Área de trabalho/GameEnglish/{}/Phrases.txt'.format(dictLanguage[pos])
+
+        return currentRoad
+
     def getPhrasesArq(self):
         #Arquivo com as frases
-        ArqPhrases = open('{}Phrases.txt'.format(self.getStreet()), 'r', encoding='latin-1')
-        
+        ArqPhrases = open('{}'.format(self.getLanguageArq()), 'r', encoding='latin-1')
+
         for i in ArqPhrases:
             if i == '' or i == '\n':
                 pass
 
             else:
                 #adiciona frase a ListaD
+                print(i)
                 self.setlistPhrasesD(i)
                 
         ArqPhrases.close()
