@@ -106,7 +106,6 @@ class phrase:
 
             else:
                 #adiciona frase a ListaD
-                print(i)
                 self.setlistPhrasesD(i)
                 
         ArqPhrases.close()

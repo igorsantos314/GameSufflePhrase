@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from OrderPhrases import phrase
+import os
 
 class interfaceGraphPhrases:
 
@@ -45,15 +46,24 @@ class interfaceGraphPhrases:
         return self.listPhrasesO
 
     def chooseLanguage(self):
+        global menu
+        menu  = True
+
         #destroy window
         self.getWindow().destroy()
         
         #functions
         def chLanguage(codLanguage):
+            global menu
             ArqLanguage = open('{}/Language.txt'.format(self.P.currentRoad), 'w')
             ArqLanguage.write(str(codLanguage))
             
             ArqLanguage.close()
+
+            if messagebox.askyesno('','Reboot Game?') == True:
+                menu = False
+
+            windowLanguage.destroy()
 
         windowLanguage = Tk()
         windowLanguage.title('CHOOSE LANGUAGE')
@@ -78,7 +88,10 @@ class interfaceGraphPhrases:
         windowLanguage.mainloop()
 
         #create menu again
-        self.createWindowMain()
+        if menu:
+            self.createWindowMain()
+        else:
+            os.system('python3 "{}/interfaceGraphicalOrderPhrases.py"'.format(self.P.currentRoad))
 
     #principal window of game
     def startGame(self):
